@@ -6,16 +6,17 @@ class Creature {
   float maxForce;
   float heading;
   float mass; 
-  PVector closet = new PVector(0,0);
+  float energy;
 
   Creature() {
     location = new PVector(0, 0);
     velocity = new PVector(0, 0);  
     acceleration = new PVector(0, 0); 
-    maxSpeed = 2;
-    maxForce = 0.6;
+    maxSpeed = 0.01;
+    maxForce = 0.01;
     heading = 0;
     mass = 2;
+    energy = 20.0;
   }
 
   Creature(float x, float y) {
@@ -26,6 +27,7 @@ class Creature {
     maxForce = 0.6;
     heading = 0;
     mass = random(1, 4);
+    energy = 20.0;
   }
 
   void applyForce(PVector force) {
@@ -42,19 +44,19 @@ class Creature {
       if(d < record){
         record = d;
         closet = food.get(i);
-     
+        energy += 10;
         }  
       }
     
-    
-    
-    this.seek(closet);
+     this.seek(closet);
 
      if(record < 5){
      food.remove(closet);
      }
   }
  
+  
+  
   void seek(PVector target){
     PVector desired = PVector.sub(target, location);
     desired.limit(maxSpeed);
@@ -69,19 +71,16 @@ class Creature {
     location.add(velocity);
     heading = velocity.heading();
     acceleration.mult(0);
+    energy -= 5;
   }
 
-  void bounceOnEdges() {
-    if (location.x>width || location.x<0) velocity.x *= -1;
-    if (location.y>height || location.y<0) velocity.y *= -1;
-  }
-
-  void passEdges() {
+   void borders() {
     if (location.x>width) location.x = 0;
     if (location.y>height) location.y =0;
     if (location.x<0) location.x = width;
     if (location.y<0) location.y = height;
   }
+
 
   void display() {
     fill(pink);
@@ -92,7 +91,13 @@ class Creature {
     popMatrix();
   }
   
-  PVector getCloset(){
-    return closet;
+  boolean dead() {
+    if (energy < 0.0) {
+      return true;
+    } 
+    else {
+      return false;
+    }
   }
+  
 }
