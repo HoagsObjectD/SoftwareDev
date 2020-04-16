@@ -1,20 +1,22 @@
-Creature c;
+Creature[] c;
 ArrayList<PVector> food = new ArrayList<PVector>();
 
-float num = 10.0;
 
 
 final color blue = color(25, 25, 112);
 final color pink = color(255, 182, 193);
-
+int num = 2;
 
 void setup() {
   //frameRate(4);
   size(720,320);
-  c = new Creature();
+  c = new Creature[num];
+  for(int i = 0; i < num; i++){
+    c[i] = new Creature(random(width), random(height));
+  }
   
   background(blue);
-  for(int i = 0; i < 20 ; i++){
+  for(int i = 0; i < 100 ; i++){
     food.add(new PVector(random(width), random(height)));  
     
      
@@ -24,11 +26,13 @@ void setup() {
 void draw() {
 
     background(blue);
-    c.eat(food);
-    c.update();
-    c.passEdges();
-    c.display();
     
+    for(int i = 0; i < c.length; i++){
+    c[i].eat(food);
+    c[i].update();
+    c[i].passEdges();
+    c[i].display();
+   }
     for(int i = 0 ; i < food.size()-1; i++){
        fill(#49CB17);
        noStroke();
