@@ -158,38 +158,38 @@ class Creature {
     }
 
 
-    ArrayList<Carnivore> predators = world.getCarnivores();                   //cycle through predators
+    ArrayList<Carnivore> predators = world.getCarnivores();                   
     for (int i = predators.size()-1; i >= 0; i--) {
       PVector predatorLocation = predators.get(i).location;
-      float predatorDistance = PVector.dist(location, predatorLocation);    // get their distance                        
+      float predatorDistance = PVector.dist(location, predatorLocation);                          
  
-      if (predatorDistance < DNArangeOfSight) {                            // if a predator is under hearing range
-        enemies.add(predatorLocation);                             // add it to the list of enemies
+      if (predatorDistance < DNArangeOfSight) {                            
+        enemies.add(predatorLocation);                             
       }
  
-      if (predatorDistance < r/2) {                                // if a predator reaches us  
-        energy =-200;                                              // well... youcan easily guess the consequences <span class="Emoticon Emoticon4"><span>:D</span></span>
+      if (predatorDistance < r/2) {                                
+        energy =-200;                                            
       }
     }
-    if (enemies.size() > 0) {                                      // if there's at leat a threat
-      target = enemies.get(0);                                     // target it
+    if (enemies.size() > 0) {                                    
+      target = enemies.get(0);                                     
       desired = PVector.sub(location, target);
     
-    if (enemies.size() > 1) {                                    // if there's more than a single threat
-        for (int i = 1; i < enemies.size(); i++) {                 // we cycle through all of them
+    if (enemies.size() > 1) {                                    
+        for (int i = 1; i < enemies.size(); i++) {                
           PVector tempDes = PVector.sub(location, enemies.get(i));
-          desired = desired.add(tempDes);                          // and we add them one by one to our desired runaway vector so we can avoid getting trapped
+          desired = desired.add(tempDes);                          
         }
       }
     } else {
-      desired = PVector.sub(target, location);                     // if there's no threat, desired is a vector pointing TO the target (from location to target)
+      desired = PVector.sub(target, location);                    
     }
 
 
-    desired.normalize();                              // Normalize desired and scale to maximum speed
+    desired.normalize();                             
     desired.mult(DNAmaxSpeed);    
-    PVector steer = PVector.sub(desired, velocity);   // Steering = Desired minus Velocity
-    steer.limit(maxForce);                            // Limit to maximum steering force
+    PVector steer = PVector.sub(desired, velocity);   
+    steer.limit(maxForce);                            
     applyForce(steer);
   }
 
