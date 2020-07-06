@@ -3,3 +3,5 @@ This is a project inspired from the book "nature of code" by Daniel Shiffman.
 Here is all my progress of the software so far.
 Made by me, Donat Salihu.
 Enjoy!
+
+Eco7 is currently the last version of the ecosystem!
